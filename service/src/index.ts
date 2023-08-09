@@ -26,19 +26,9 @@ router.post('/chat-process', [limiter], async (req, res) => {
 
   try {
     const { prompt, options = {}, systemMessage, temperature, top_p } = req.body as RequestProps
-    getTokenCount(prompt).then((tokens) => {
-      log(req, {
-        prompt: '',
-        prompt_length: prompt.length,
-        options,
-        system_message: systemMessage,
-        temperature,
-        top_p,
-        tokens,
-      })
-    })
+
     let firstChunk = true
-    await chatReplyProcess({
+    const message = await chatReplyProcess({
       message: prompt,
       lastContext: options,
       process: (chat: ChatMessage) => {
@@ -49,6 +39,24 @@ router.post('/chat-process', [limiter], async (req, res) => {
       temperature,
       top_p,
     })
+    getTokenCount(prompt).then(async (prompt_tokens) => {
+      const response_tokens = await getTokenCount(message.data?.text || '')
+      const { id, object, created, model } = message.data.detail
+      log(req, {
+        // prompt: '',
+        prompt_length: prompt.length,
+        response_length: message.data?.text?.length || 0,
+        options,
+        // system_message: systemMessage,
+        temperature,
+        top_p,
+        prompt_tokens,
+        response_tokens,
+        tokens: prompt_tokens + response_tokens,
+        detail: { id, object, created, model }
+      })
+    })
+    // console.log("message", message, JSON.stringify(message))
   }
   catch (error) {
     res.write(JSON.stringify(error))
