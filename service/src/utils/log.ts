@@ -5,7 +5,7 @@ import { isNotEmptyString } from '../utils/is'
 const log = async (req, data) => {
   const LOG_DISABLED = process.env.LOG_DISABLED
   const LOG_SERVICE_URL = process.env.LOG_SERVICE_URL
-  if (!isNotEmptyString(LOG_SERVICE_URL) || JSON.parse(LOG_DISABLED) !== true) {
+  if (!isNotEmptyString(LOG_DISABLED) || JSON.parse(LOG_DISABLED) !== true) {
     const projectName = process.env.PROJECT_NAME || 'chatgpt-web'
     const reqIP = req.ip
     const clientIP = req.header('x-forwarded-for') || req.socket.remoteAddress
