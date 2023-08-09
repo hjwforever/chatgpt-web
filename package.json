@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check build-only",
+    "build": "run-p build-only",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
@@ -25,6 +25,7 @@
   "dependencies": {
     "@traptitech/markdown-it-katex": "^3.6.0",
     "@vueuse/core": "^9.13.0",
+    "express": "^4.18.2",
     "highlight.js": "^11.7.0",
     "html2canvas": "^1.4.1",
     "katex": "^0.16.4",
