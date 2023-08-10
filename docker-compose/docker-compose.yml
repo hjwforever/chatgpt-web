@@ -33,6 +33,11 @@ services:
       SOCKS_PROXY_PASSWORD:
       # HTTPS_PROXY 代理，可选
       HTTPS_PROXY:
+
+			PROJECT_NAME: chatgpt-web4
+	 		LOG_DISABLED:
+			LOG_FILE_PATH:
+	 		LOG_SERVICE_URL:
   nginx:
     container_name: nginx
     image: nginx:alpine
